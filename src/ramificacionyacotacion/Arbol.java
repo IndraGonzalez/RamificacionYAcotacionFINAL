@@ -1,9 +1,18 @@
 
 package ramificacionyacotacion;
 
-public class Arbol {
+import java.util.LinkedList;
+import java.util.List;
 
-    public Arbol() {
+public class Arbol {
+    List<Nodo> estructura;
+    
+    public Arbol(Nodo inicio) {
+        this.estructura = new LinkedList();
+        estructura.add(inicio);
     }
     
+    public void insertaNodo(Nodo nodo){
+        estructura.add(nodo);
+    }
 }

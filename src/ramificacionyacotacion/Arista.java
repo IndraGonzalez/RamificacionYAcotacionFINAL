@@ -4,24 +4,25 @@ package ramificacionyacotacion;
 
 
 public class Arista implements Comparable<Arista> {
-    private int nodoA;
-    private int nodoB;
+    private Vertice verticeA;
+    private Vertice verticeB;
     private float peso;
 
-    public Arista(int nodoA, int nodoB, float peso) {
-        this.nodoA = nodoA;
-        this.nodoB = nodoB;
+    public Arista(Vertice verticeA, Vertice verticeB, float peso) {
+        this.verticeA = verticeA;
+        this.verticeB = verticeB;
         this.peso = peso;
     }
 
-    public int getNodoA() {
-        return nodoA;
+    public Vertice getVerticeA() {
+        return verticeA;
     }
 
-    public int getNodoB() {
-        return nodoB;
+    public Vertice getVerticeB() {
+        return verticeB;
     }
 
+    
     public float getPeso() {
         return peso;
     }

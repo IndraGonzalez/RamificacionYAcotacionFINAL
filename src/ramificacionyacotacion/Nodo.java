@@ -4,14 +4,17 @@ package ramificacionyacotacion;
 import java.util.List;
 
 public class Nodo {
-    int id;
+    Vertice vertice;
     List<Nodo> hijos;
+    Nodo padre;
 
-    public Nodo(int id) {
-        this.id = id;
-        
+    public Nodo(Vertice vertice, Nodo padre) {
+        this.vertice = vertice;
+        this.padre = padre;
     }
-    
-    //Hay que crear un nuevo arbol para cada búsqueda
-    
+
+    public void setHijos(List<Nodo> hijos) {
+        this.hijos = hijos;
+    }
+
 }

@@ -20,7 +20,7 @@ public class Algortimo {
         this.grafo = grafo;
         this.inicio = new Nodo(inicio,null);
         this.fin = fin;
-        caminoActual.add(inicio);
+        caminoActual.push(inicio);
     }
     
     public void ramificar (Nodo nodo){
@@ -39,9 +39,12 @@ public class Algortimo {
         }
     }
     
-    public Nodo getMenor (List<Nodo> hijos){
-        Nodo padre = hijos.get(0).padre;
+    public Nodo seleccionar (List<Nodo> hijos){
         Nodo hijoMenor = hijos.get(0);
+        Nodo padre = hijoMenor.padre;
+        if(padre == null){
+            return hijoMenor;
+        }
         float pesoMenor= grafo.getPeso(padre.vertice, hijoMenor.vertice);
         for (int i = 1; i < hijos.size(); i++) {
             Nodo nodoActual = hijos.get(i);
@@ -51,6 +54,7 @@ public class Algortimo {
                 hijoMenor = nodoActual;
             }
         }
+        caminoActual.push(hijoMenor);
         pesoActual += pesoMenor;
         return hijoMenor;
     }

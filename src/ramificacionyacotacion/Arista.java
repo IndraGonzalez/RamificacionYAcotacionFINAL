@@ -1,8 +1,5 @@
 package ramificacionyacotacion;
 
-
-
-
 public class Arista implements Comparable<Arista> {
     private Vertice verticeA;
     private Vertice verticeB;

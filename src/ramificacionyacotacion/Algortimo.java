@@ -33,7 +33,7 @@ public class Algortimo {
                 vertice = grafo.getConjuntoVertices().get(i);
                 etapaHijo = vertice.getEtapas()[1];
                 if(etapaHijo > etapaPadre){
-                    nodo.hijos.add(new Nodo(vertice, nodo));
+                    nodo.pesoHijos.put(new Nodo(vertice, nodo),fila[i]);
                 }
             }
         }

@@ -1,9 +1,10 @@
 
 package ramificacionyacotacion;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Stack;
 
 public class Algortimo {
     
@@ -11,20 +12,20 @@ public class Algortimo {
     Nodo inicio;
     Vertice fin;
     Arbol arbol;
-    Stack caminoActual;
-    Stack caminoSolucion;
-    int pesoSolucion;
-    int pesoActual;
+    List<Nodo> caminoSolucion;
+    float pesoSolucion;
     
     public Algortimo(Grafo grafo, Vertice inicio, Vertice fin) {
         this.grafo = grafo;
         this.inicio = new Nodo(inicio,null);
         this.fin = fin;
-        caminoActual.push(inicio);
+        caminoSolucion = new ArrayList<Nodo>();
+        pesoSolucion = -1;
     }
     
-    public void ramificar (Nodo nodo){
+    public List<Nodo> ramificar (Nodo nodo){
         float[] fila = grafo.getMatrizAdyacente()[nodo.vertice.getId()];
+        List<Nodo> hijos = new ArrayList<Nodo>();
         int etapaHijo;
         int etapaPadre = nodo.vertice.getEtapas()[1];
         Vertice vertice;
@@ -33,29 +34,58 @@ public class Algortimo {
                 vertice = grafo.getConjuntoVertices().get(i);
                 etapaHijo = vertice.getEtapas()[1];
                 if(etapaHijo > etapaPadre){
-                    nodo.pesoHijos.put(new Nodo(vertice, nodo),fila[i]);
+                    Nodo nuevoNodo = new Nodo(vertice, nodo);
+                    hijos.add(nuevoNodo);
+                    nodo.pesoHijos.put(nuevoNodo,fila[i]);
                 }
             }
         }
+        return hijos;
     }
     
-    public Nodo seleccionar (List<Nodo> hijos){
-        Nodo hijoMenor = hijos.get(0);
-        Nodo padre = hijoMenor.padre;
-        if(padre == null){
-            return hijoMenor;
-        }
-        float pesoMenor= grafo.getPeso(padre.vertice, hijoMenor.vertice);
-        for (int i = 1; i < hijos.size(); i++) {
-            Nodo nodoActual = hijos.get(i);
-            float pesoActual = grafo.getPeso(padre.vertice, nodoActual.vertice);
-            if(pesoActual < pesoMenor){
-                pesoMenor = pesoActual;
-                hijoMenor = nodoActual;
+    public void ordenar (List<Nodo> hijos){
+        Collections.sort(hijos);
+    }
+    
+    public float calculaPesoCamino(List<Nodo> camino){
+        float sumaPesos = 0;
+        Nodo actual;
+        Nodo siguiente;
+        for (int i = 0; i < camino.size(); i++) {
+            actual = camino.get(i);
+            if(i+1 < camino.size()){
+                siguiente = camino.get(i+1);
+                sumaPesos += grafo.getPeso(actual.vertice, siguiente.vertice);
             }
         }
-        caminoActual.push(hijoMenor);
-        pesoActual += pesoMenor;
-        return hijoMenor;
+        return sumaPesos;
+    }
+    
+    public void recursivo (Nodo nodo, ArrayList<Nodo> camino){
+        if(nodo.vertice.id == fin.id){
+            caminoSolucion = (List<Nodo>) camino.clone();
+            pesoSolucion = calculaPesoCamino(caminoSolucion);
+            return;
+        }
+        List<Nodo> hijos = ramificar(nodo);
+        ordenar(hijos);
+        Iterator<Nodo> iterator = hijos.iterator();
+        while(iterator.hasNext()){
+            Nodo next = iterator.next();
+            float pesoActual = calculaPesoCamino(camino);
+            if((pesoActual >= pesoSolucion) && (pesoSolucion != -1)){
+                return;
+            }
+            if(next.pesoHijos.isEmpty()) return;
+            camino.add(next);
+            recursivo(next,camino);
+        }
+    }
+    
+    public List<Nodo> ejecutar(){
+        List<Nodo> camino = new ArrayList<Nodo>();
+        camino.add(inicio);
+        recursivo(inicio, (ArrayList<Nodo>) camino);
+        return caminoSolucion;
     }
 }

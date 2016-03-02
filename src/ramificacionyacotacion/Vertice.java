@@ -25,9 +25,8 @@ public class Vertice {
     public int[] getEtapas() {
         return etapas;
     }
-    
-    
-   
-   
 }
+    
+    
+
 

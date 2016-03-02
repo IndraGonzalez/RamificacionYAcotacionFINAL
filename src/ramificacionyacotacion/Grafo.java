@@ -20,11 +20,16 @@ public class Grafo {
     }
     
     public void insertaArista(Arista arista){
-        if((arista.getVerticeA().getId() > matrizAdyacente.length) || (arista.getVerticeB().getId() > matrizAdyacente.length)){
-            System.out.println("Los vértices que intenta conectar no pertecen al grafo.");
-            return;
-        } 
-        if(arista.getVerticeA() == arista.getVerticeB()){
+        for(int i = 0; i < conjuntoVertices.size(); i++) {
+            //if((conjuntoVertices.get(i).getId() == arista.getVerticeA().getId())
+            //        || (conjuntoVertices.get(i).getId() == arista.getVerticeB().getId())){
+            if((arista.getVerticeA().getId() > matrizAdyacente.length) || (arista.getVerticeB().getId() > matrizAdyacente.length)){
+                System.out.println("Los vértices que intenta conectar no pertecen al grafo.");
+                return;
+            }
+        }
+            
+        if(arista.getVerticeA().getId() == arista.getVerticeB().getId()){
             System.out.println("No se puede conectar un vértice con si mismo. ");
             return;
         }
@@ -53,6 +58,7 @@ public class Grafo {
             }
         }
         conjuntoVertices.add(vertice);
+        
     }
     
     public float getPeso(Vertice verticeA, Vertice verticeB){
@@ -77,5 +83,14 @@ public class Grafo {
     
     public int getNumeroNodos (){
         return matrizAdyacente.length;
+    }
+    
+    public void printMatriz(){
+        for (int i = 0; i < matrizAdyacente.length; i++) {
+            for (int j = 0; j < matrizAdyacente[1].length; j++) {
+                System.out.print(matrizAdyacente[i][j] + " ");
+            }
+            System.out.println("");
+        }
     }
 }

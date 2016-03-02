@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class Algortimo {
+public class RamificacionYAcotacion {
     
     Grafo grafo;
     Nodo inicio;
@@ -15,12 +15,13 @@ public class Algortimo {
     List<Nodo> caminoSolucion;
     float pesoSolucion;
     
-    public Algortimo(Grafo grafo, Vertice inicio, Vertice fin) {
+    public RamificacionYAcotacion(Grafo grafo, Vertice inicio, Vertice fin) {
         this.grafo = grafo;
         this.inicio = new Nodo(inicio,null);
         this.fin = fin;
         caminoSolucion = new ArrayList<Nodo>();
         pesoSolucion = -1;
+        arbol = new Arbol(this.inicio);
     }
     
     public List<Nodo> ramificar (Nodo nodo){
@@ -32,11 +33,13 @@ public class Algortimo {
         for (int i = 0; i < fila.length; i++) {
             if(fila[i] > 0){
                 vertice = grafo.getConjuntoVertices().get(i);
+                
                 etapaHijo = vertice.getEtapas()[1];
                 if(etapaHijo > etapaPadre){
                     Nodo nuevoNodo = new Nodo(vertice, nodo);
                     hijos.add(nuevoNodo);
                     nodo.pesoHijos.put(nuevoNodo,fila[i]);
+                    arbol.estructura.add(nodo);
                 }
             }
         }

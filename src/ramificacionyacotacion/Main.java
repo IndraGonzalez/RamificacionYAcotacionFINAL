@@ -1,6 +1,8 @@
 
 package ramificacionyacotacion;
 
+import java.util.List;
+
 public class Main {
 
     
@@ -8,7 +10,8 @@ public class Main {
          
         System.out.println("-------Inicio de pruebas-------");
         System.out.println("");
-        System.out.println("-1er CASO- Solución única y directa");
+        System.out.println("---------------------------------------------");
+        System.out.println("-1er CASO- Hay dos soluciones del mismo peso. Cogerá la primera. ");
         System.out.println("---------------------------------------------");
         
         Grafo grafo1 = new Grafo(8);
@@ -31,8 +34,6 @@ public class Main {
         grafo1.insertaVertice(vertice23);
         grafo1.insertaVertice(vertice31);
         
-        
-        
         grafo1.insertaArista(new Arista(vertice01, vertice11, 1));
         grafo1.insertaArista(new Arista(vertice01, vertice12, 3));
         grafo1.insertaArista(new Arista(vertice01, vertice13, 2));
@@ -51,48 +52,82 @@ public class Main {
         grafo1.printMatriz();
         
         RamificacionYAcotacion algoritmo = new RamificacionYAcotacion(grafo1, vertice01, vertice31);
-        algoritmo.ejecutar();
-        algoritmo.arbol.printArbol();
         
-        
-        
-        /*System.out.println("");
-        List<Arista> conjuntoAristas1 = grafo1.getConjuntoAristas();
-        System.out.println("Conjunto de aristas del grafo");
-        printConjuntoAristas(conjuntoAristas1);
-        
-        System.out.println("");
-        System.out.println("La suma de pesos del arbol mínimo de entrada es: " + 138.9);
-        System.out.println("");
-        
-        System.out.println("N = " + matrizAdyacente1.length);
-        System.out.println("");
-        
-        System.out.print("Comprobación grafo entrada : ");
-        comprobacionConexo(grafo1);
-        System.out.println("");
-        
-        Kruskal kruskal1 = new Kruskal(grafo1);
-        List<Arista> solucion1 = kruskal1.ejecutar();
-        printSolucion(solucion1);
-        
-        Grafo grafoSolucion1 = creacionGrafoSolucion(solucion1);
-        System.out.println("");
-        
-        System.out.println("La suma de pesos del arbol mínimo de salida es: " + comprobacionPesos(solucion1));
-        System.out.println("");
-        
-        System.out.println("El número de aristas es " + solucion1.size() + " que es igual a N - 1 (" + (matrizAdyacente1.length-1) + ")");
-        System.out.println("");
-        
-        
-        System.out.print("Comprobación grafo salida : ");
-        comprobacionConexo(grafoSolucion1);
-        System.out.println("");
+        List<Nodo> solucion = algoritmo.ejecutar();
+        printSolucion(solucion,algoritmo);
         
         System.out.println("---------------------------------------------");
+        System.out.println("-2º CASO- Hay dos soluciones: primero encuentra la de mayor peso"
+                + "y, después, encuentra la solución óptima, de menor peso.");
+        System.out.println("---------------------------------------------");
         
-    
+        Grafo grafo2 = new Grafo(8);
+        
+        grafo2.insertaVertice(vertice01);
+        grafo2.insertaVertice(vertice11);
+        grafo2.insertaVertice(vertice12);
+        grafo2.insertaVertice(vertice13);
+        grafo2.insertaVertice(vertice21);
+        grafo2.insertaVertice(vertice22);
+        grafo2.insertaVertice(vertice23);
+        grafo2.insertaVertice(vertice31);
+        
+        grafo2.insertaArista(new Arista(vertice01, vertice11, 1));
+        grafo2.insertaArista(new Arista(vertice01, vertice12, 3));
+        grafo2.insertaArista(new Arista(vertice01, vertice13, 2));
+        grafo2.insertaArista(new Arista(vertice11, vertice21, 5));
+        grafo2.insertaArista(new Arista(vertice11, vertice23, 3));
+        grafo2.insertaArista(new Arista(vertice12, vertice21, 4));
+        grafo2.insertaArista(new Arista(vertice12, vertice22, 3));
+        grafo2.insertaArista(new Arista(vertice13, vertice22, 1));
+        grafo2.insertaArista(new Arista(vertice13, vertice23, 7));
+        grafo2.insertaArista(new Arista(vertice21, vertice31, 4));
+        grafo2.insertaArista(new Arista(vertice22, vertice31, 1));
+        grafo2.insertaArista(new Arista(vertice23, vertice31, 1));
+        
+        System.out.println("");
+        System.out.println("Matriz Adyacente del grafo");
+        grafo2.printMatriz();
+        
+        RamificacionYAcotacion algoritmo2 = new RamificacionYAcotacion(grafo2, vertice01, vertice31);
+        
+        List<Nodo> solucion2 = algoritmo2.ejecutar();
+        printSolucion(solucion2,algoritmo2);
+        
+        System.out.println("---------------------------------------------");
+        System.out.println("-3er CASO- No hay solución. El vértice solución está asilado.");
+        System.out.println("---------------------------------------------");
+        
+        Grafo grafo3 = new Grafo(8);
+        
+        grafo3.insertaVertice(vertice01);
+        grafo3.insertaVertice(vertice11);
+        grafo3.insertaVertice(vertice12);
+        grafo3.insertaVertice(vertice13);
+        grafo3.insertaVertice(vertice21);
+        grafo3.insertaVertice(vertice22);
+        grafo3.insertaVertice(vertice23);
+        grafo3.insertaVertice(vertice31);
+        
+        grafo3.insertaArista(new Arista(vertice01, vertice11, 1));
+        grafo3.insertaArista(new Arista(vertice01, vertice12, 3));
+        grafo3.insertaArista(new Arista(vertice01, vertice13, 2));
+        grafo3.insertaArista(new Arista(vertice11, vertice21, 5));
+        grafo3.insertaArista(new Arista(vertice11, vertice23, 3));
+        grafo3.insertaArista(new Arista(vertice12, vertice21, 4));
+        grafo3.insertaArista(new Arista(vertice12, vertice22, 3));
+        grafo3.insertaArista(new Arista(vertice13, vertice22, 1));
+        grafo3.insertaArista(new Arista(vertice13, vertice23, 7));
+        
+        System.out.println("");
+        System.out.println("Matriz Adyacente del grafo");
+        grafo3.printMatriz();
+        
+        RamificacionYAcotacion algoritmo3 = new RamificacionYAcotacion(grafo3, vertice01, vertice31);
+        
+        List<Nodo> solucion3 = algoritmo3.ejecutar();
+        printSolucion(solucion3,algoritmo3);
+        
         
         /**
          * Pruebas de las etapas del grafo.
@@ -112,6 +147,18 @@ public class Main {
         
         */
                
+    }
+
+    private static void printSolucion(List<Nodo> solucion, RamificacionYAcotacion algoritmo) {
+        System.out.print("Solucion: ");
+        if(solucion.isEmpty()){
+            System.out.println("NO HAY SOLUCIÓN");
+            return;
+        }
+        for (int i = 0; i < solucion.size(); i++) {
+            System.out.println(solucion.get(i).vertice.id);
+        }
+        algoritmo.arbol.printArbol();   
     }
     
 }

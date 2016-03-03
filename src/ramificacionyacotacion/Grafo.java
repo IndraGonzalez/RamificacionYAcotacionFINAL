@@ -21,8 +21,6 @@ public class Grafo {
     
     public void insertaArista(Arista arista){
         for(int i = 0; i < conjuntoVertices.size(); i++) {
-            //if((conjuntoVertices.get(i).getId() == arista.getVerticeA().getId())
-            //        || (conjuntoVertices.get(i).getId() == arista.getVerticeB().getId())){
             if((arista.getVerticeA().getId() > matrizAdyacente.length) || (arista.getVerticeB().getId() > matrizAdyacente.length)){
                 System.out.println("Los vértices que intenta conectar no pertecen al grafo.");
                 return;

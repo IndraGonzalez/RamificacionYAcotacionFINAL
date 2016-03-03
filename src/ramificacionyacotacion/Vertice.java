@@ -2,8 +2,8 @@
 package ramificacionyacotacion;
 
 public class Vertice {
-    int id;
-    int[] etapas;
+    private int id;
+    private int[] etapas;
 
     public Vertice(int id, int i , int j) {
         this.id = id;

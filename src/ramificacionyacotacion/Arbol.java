@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Arbol {
-    List<Nodo> estructura;
+    private List<Nodo> estructura;
     
     public Arbol(Nodo inicio) {
         this.estructura = new LinkedList();
@@ -23,10 +23,16 @@ public class Arbol {
         System.out.println("El árbol tiene los siguientes nodos: ");
         for (int i = 0; i < estructura.size(); i++) {
             Nodo nodo = estructura.get(i);
-            System.out.println("Nodo " + nodo.vertice.id + " con etapas: [" + 
-                    nodo.vertice.etapas[0] + "," + nodo.vertice.etapas[1] + 
+            System.out.print("Nodo " + nodo.getVertice().getId() + " con etapas: [" + 
+                    nodo.getVertice().getEtapas()[0] + "," + nodo.getVertice().getEtapas()[1] + 
                     "] ");
-            HashMap<Integer, Float> map = nodo.pesoHijos;
+            if(nodo.getPadre() != null){
+                System.out.print("y con padre: " + nodo.getPadre().getVertice().getId());
+            } else {
+                System.out.print("y soy el nodo raíz");
+            }
+            System.out.println("");
+            HashMap<Integer, Float> map = nodo.getPesoHijos();
             Iterator it = map.entrySet().iterator();
             System.out.print("Hijos: [");
             String hijos = new String();

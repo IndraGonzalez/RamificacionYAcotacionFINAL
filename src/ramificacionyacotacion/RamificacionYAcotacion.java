@@ -8,13 +8,13 @@ import java.util.List;
 
 public class RamificacionYAcotacion {
     
-    Grafo grafo;
-    Nodo inicio;
-    Vertice fin;
-    Arbol arbol;
-    List<Nodo> caminoSolucion;
-    float pesoSolucion;
-    float pesoActual;
+    private Grafo grafo;
+    private Nodo inicio;
+    private Vertice fin;
+    private Arbol arbol;
+    private List<Nodo> caminoSolucion;
+    private float pesoSolucion;
+    private float pesoActual;
     
     public RamificacionYAcotacion(Grafo grafo, Vertice inicio, Vertice fin) {
         this.grafo = grafo;
@@ -27,22 +27,19 @@ public class RamificacionYAcotacion {
     }
     
     public List<Nodo> ramificar (Nodo nodo){
-        float[] fila = grafo.getMatrizAdyacente()[nodo.vertice.getId()-1];
+        float[] fila = grafo.getMatrizAdyacente()[nodo.getVertice().getId()-1];
         List<Nodo> hijos = new ArrayList<Nodo>();
         int etapaHijo;
-        int etapaPadre = nodo.vertice.getEtapas()[0];
-        System.out.println("Entra a ramificar: " + nodo.vertice.id);
+        int etapaPadre = nodo.getVertice().getEtapas()[0];
         Vertice vertice;
         for (int i = 0; i < fila.length; i++) {
             if(fila[i] > 0){
                 vertice = grafo.getConjuntoVertices().get(i);     
-                System.out.println("Va a añadir el hijo: " + vertice.id);
                 etapaHijo = vertice.getEtapas()[0];
                 if(etapaHijo > etapaPadre){
                     Nodo nuevoNodo = new Nodo(vertice, nodo);
-                    System.out.println("Añade el hijo: " + vertice.id);
                     hijos.add(nuevoNodo);
-                    nodo.pesoHijos.put(nuevoNodo.vertice.id,fila[i]);
+                    nodo.getPesoHijos().put(nuevoNodo.getVertice().getId(),fila[i]);
                     arbol.insertaNodo(nuevoNodo);
                 }
             }
@@ -62,24 +59,21 @@ public class RamificacionYAcotacion {
             actual = camino.get(i);
             if((i+1) < camino.size()){
                 siguiente = camino.get(i+1);
-                sumaPesos += grafo.getPeso(actual.vertice, siguiente.vertice);
+                sumaPesos += grafo.getPeso(actual.getVertice(), siguiente.getVertice());
             }
         }
         return sumaPesos;
     }
     
     public void recursivo (Nodo nodo, ArrayList<Nodo> camino){
-        if(nodo.vertice.id == fin.id){
+        if(nodo.getVertice().getId() == fin.getId()){
             caminoSolucion = (List<Nodo>) camino.clone();
             pesoSolucion = calculaPesoCamino(caminoSolucion);
             pesoActual = 0;
-            System.out.println("** Peso solución = " + pesoSolucion);
             return;
         }
         List<Nodo> hijos = ramificar(nodo);
-        System.out.println("Tamaño de los hijos del nodo " + nodo.vertice.id + " es: " + hijos.size());
         if(hijos.size() == 0){
-            System.out.println("Entró a ramificar " + nodo.vertice.id + " y estaba vacío");
             return;
         }
         ordenar(hijos);
@@ -89,11 +83,6 @@ public class RamificacionYAcotacion {
             List<Nodo> caminoConNodoAcual = (List<Nodo>)camino.clone();
             caminoConNodoAcual.add(next);
             pesoActual = calculaPesoCamino(caminoConNodoAcual);
-            System.out.println("* Peso actual en el nodo " + next.vertice.id + " = " + pesoActual);
-            System.out.println("Camino: ");
-            for (int i = 0; i < camino.size(); i++) {
-                System.out.println(camino.get(i).vertice.id);
-            }
             if((pesoActual >= pesoSolucion) && (pesoSolucion != -1)){
                 return;
             }
@@ -111,4 +100,34 @@ public class RamificacionYAcotacion {
         recursivo(inicio, (ArrayList<Nodo>) camino);
         return caminoSolucion;
     }
+
+    public Grafo getGrafo() {
+        return grafo;
+    }
+
+    public Nodo getInicio() {
+        return inicio;
+    }
+
+    public Vertice getFin() {
+        return fin;
+    }
+
+    public Arbol getArbol() {
+        return arbol;
+    }
+
+    public List<Nodo> getCaminoSolucion() {
+        return caminoSolucion;
+    }
+
+    public float getPesoSolucion() {
+        return pesoSolucion;
+    }
+
+    public float getPesoActual() {
+        return pesoActual;
+    }
+    
+    
 }

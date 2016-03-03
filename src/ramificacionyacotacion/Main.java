@@ -11,7 +11,7 @@ public class Main {
         System.out.println("-------Inicio de pruebas-------");
         System.out.println("");
         System.out.println("---------------------------------------------");
-        System.out.println("-1er CASO- Hay dos soluciones del mismo peso. Cogerá la primera. ");
+        System.out.println("-1er CASO- \nHay dos soluciones del mismo peso. \nCogerá la primera. ");
         System.out.println("---------------------------------------------");
         
         Grafo grafo1 = new Grafo(8);
@@ -49,16 +49,20 @@ public class Main {
         
         System.out.println("");
         System.out.println("Matriz Adyacente del grafo");
+        System.out.println("");
         grafo1.printMatriz();
+        System.out.println("");
         
         RamificacionYAcotacion algoritmo = new RamificacionYAcotacion(grafo1, vertice01, vertice31);
         
         List<Nodo> solucion = algoritmo.ejecutar();
+        System.out.println("");
         printSolucion(solucion,algoritmo);
+        System.out.println("");
         
         System.out.println("---------------------------------------------");
-        System.out.println("-2º CASO- Hay dos soluciones: primero encuentra la de mayor peso"
-                + "y, después, encuentra la solución óptima, de menor peso.");
+        System.out.println("-2º CASO- \nHay dos soluciones: primero encuentra la de mayor peso"
+                + "\ny, después, encuentra la solución óptima, de menor peso.");
         System.out.println("---------------------------------------------");
         
         Grafo grafo2 = new Grafo(8);
@@ -87,16 +91,21 @@ public class Main {
         
         System.out.println("");
         System.out.println("Matriz Adyacente del grafo");
+        System.out.println("");
         grafo2.printMatriz();
+        System.out.println("");
         
         RamificacionYAcotacion algoritmo2 = new RamificacionYAcotacion(grafo2, vertice01, vertice31);
         
         List<Nodo> solucion2 = algoritmo2.ejecutar();
+        System.out.println("");
         printSolucion(solucion2,algoritmo2);
+        System.out.println("");
         
         System.out.println("---------------------------------------------");
-        System.out.println("-3er CASO- No hay solución. El vértice solución está asilado.");
+        System.out.println("-3er CASO- \nNo hay solución. \nEl vértice solución está asilado.");
         System.out.println("---------------------------------------------");
+        
         
         Grafo grafo3 = new Grafo(8);
         
@@ -121,12 +130,16 @@ public class Main {
         
         System.out.println("");
         System.out.println("Matriz Adyacente del grafo");
+        System.out.println("");
         grafo3.printMatriz();
+        System.out.println("");
         
         RamificacionYAcotacion algoritmo3 = new RamificacionYAcotacion(grafo3, vertice01, vertice31);
         
         List<Nodo> solucion3 = algoritmo3.ejecutar();
+        System.out.println("");
         printSolucion(solucion3,algoritmo3);
+        System.out.println("");
         
         
         /**
@@ -153,12 +166,20 @@ public class Main {
         System.out.print("Solucion: ");
         if(solucion.isEmpty()){
             System.out.println("NO HAY SOLUCIÓN");
-            return;
+        } else {
+            for (int i = 0; i < solucion.size(); i++) {
+                if(i == solucion.size()-1){
+                   System.out.print(solucion.get(i).getVertice().getId()); 
+                } else {
+                   System.out.print(solucion.get(i).getVertice().getId() + " --> ");
+                }
+            }
         }
-        for (int i = 0; i < solucion.size(); i++) {
-            System.out.println(solucion.get(i).vertice.id);
-        }
-        algoritmo.arbol.printArbol();   
+        
+        System.out.println("");
+        System.out.println("");
+        algoritmo.getArbol().printArbol();  
+        System.out.println("");
     }
     
 }

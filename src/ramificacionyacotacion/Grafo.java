@@ -44,7 +44,7 @@ public class Grafo {
     }
     
     public void insertaVertice(Vertice vertice){
-        if(vertice.etapas[1] > matrizAdyacente.length){
+        if(vertice.getEtapas()[1] > matrizAdyacente.length){
             throw new IllegalArgumentException("El número de etapas debe ser menor que el número de vertices.");
         }
         if((vertice.getId() < 1) || (vertice.getId() > matrizAdyacente.length)){
